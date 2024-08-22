@@ -65,6 +65,16 @@ a:hover {
     font-size: 1.1em;
 }
 
+.css_help01 {
+    display: block;
+    height: 50px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px;
+}
+
 a img {
     display: block;
     height: 50px;

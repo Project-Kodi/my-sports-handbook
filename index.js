@@ -122,7 +122,14 @@ function generateRecentEventsElement(event, teamID) {
       case "row-loss": results = "L";
    } 
 /* Score could be null for current game */
-  let highlightReel = (event.intAwayScore) ? `<a href="${event.strVideo}" target="_blank"><img src="images/play_youtube_video.png" alt="play highlight video" /></a>` : "In Progress";
+    let highlightReel
+    if (event.strVideo == ""){
+        highlightReel = (event.intAwayScore) ? `<img src="images/play_youtube_video_no.png" class="css_help01" alt="play highlight video" />` : "Nothing here..";
+    }
+   else {
+        highlightReel = (event.intAwayScore) ? `<a href="${event.strVideo}" target="_blank"><img src="images/play_youtube_video.png" alt="play highlight video" /></a>` : "In Progress";
+   }
+  
 
     return `
     <tr class="${rowClass}">
@@ -225,7 +232,7 @@ function generateSocialMedia(t) {
     let socialMedia = [];
     /* if the Team has a website */
     if ((t.strWebsite) && t.strWebsite != "") {
-        socialMedia.push(`<a href="http://${t.strWebsite}" target="_blank"><img src="${t.strTeamBadge}" alt="team website" /></a>`); 
+        socialMedia.push(`<a href="http://${t.strWebsite}" target="_blank"><img src="${t.strBadge}" alt="team website" /></a>`); 
     }
     /* if the Team has a Facebook page */
     if ((t.strFacebook) && t.strFacebook != "") {
@@ -254,17 +261,17 @@ function displaySocialMedia(t) {
 
 function generateAboutString(teamDetails) {
  
-    return `<div class="teamLogo"><img src="${teamDetails.strTeamLogo}" alt="Team Logo" /></div>
+    return `<div class="teamLogo"><img src="${teamDetails.strLogo}" alt="Team Logo" /></div>
     <section>
         <h2>History</h2>
         <div class="floatPictureRight">
-               <img src="${teamDetails.strTeamBadge}" alt="Team Badge" />
+               <img src="${teamDetails.strBadge}" alt="Team Badge" />
         </div>
         <p class="longText">${(teamDetails.strDescriptionEN) ? teamDetails.strDescriptionEN : ' '}</p>
     </section>
     <section>
         <h2>Stadium</h2>
-        <div class="floatPictureLeft"><img src="${teamDetails.strStadiumThumb}" alt="Team Stadium" /></div>
+        <div>${teamDetails.strStadium}</div>
         <p class="longText">${(teamDetails.strStadiumDescription) ? teamDetails.strStadiumDescription : ' '}</p>
     </section>`;
 }
@@ -282,11 +289,11 @@ function getTeamDetails(teamID, teamsList) {
     for (let i = 0; i < teamsList.length; i++) {
         if (teamsList[i].idTeam === teamID) {
              /* Display Banner */
-            $('#js-team-banner').html(`<img src="${teamsList[i].strTeamBanner}" alt="team banner"/>`);
+            $('#js-team-banner').html(`<img src="${teamsList[i].strBanner}" alt="team banner"/>`);
 
             /* Display Vitals */
             $('#js-team-vitals').html(`<p id="js-team-founded">Founded: ${teamsList[i].intFormedYear}</p>
-                                       <p id="js-team-manager">Manager: ${teamsList[i].strManager}</p>`);
+                                       <p id="js-team-manager">Names: ${teamsList[i].strTeamAlternate}</p>`);
 
             /* Display Social Media */                           
             let socialMediaString = generateSocialMedia(teamsList[i]);
